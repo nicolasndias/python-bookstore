@@ -1,6 +1,8 @@
 import pytest
+
 from product.factories import CategoryFactory
 from product.serializers import CategorySerializer
+
 
 @pytest.mark.django_db
 def test_category_serializer_accepts_valid_data():
@@ -9,13 +11,11 @@ def test_category_serializer_accepts_valid_data():
         "slug": "eletronicos",
         "description": "Produtos eletrônicos",
         "active": True,
-
     }
 
     serializer = CategorySerializer(data=data)
 
     assert serializer.is_valid(), serializer.errors
-
 
 
 @pytest.mark.django_db
@@ -50,10 +50,43 @@ def test_category_serializer_requires_slug():
         "title": "Eletrônicos",
         "description": "Produtos eletrônicos",
         "active": True,
-
     }
 
     serializer = CategorySerializer(data=data)
 
     assert not serializer.is_valid()
     assert "slug" in serializer.errors
+
+
+@pytest.mark.django_db
+def test_category_serializer_rejects_invalid_slug():
+    data = {
+        "title": "Eletrônicos",
+        "slug": "slug inválido com espaços",
+        "description": "Produtos eletrônicos",
+        "active": True,
+    }
+
+    serializer = CategorySerializer(data=data)
+
+    assert not serializer.is_valid()
+    assert "slug" in serializer.errors
+
+
+@pytest.mark.django_db
+def test_category_serializer_creates_category():
+    data = {
+        "title": "Livros",
+        "slug": "livros",
+        "description": "Livros em geral",
+        "active": True,
+    }
+
+    serializer = CategorySerializer(data=data)
+
+    assert serializer.is_valid(), serializer.errors
+    category = serializer.save()
+
+    assert category.id is not None
+    assert category.title == "Livros"
+    assert category.slug == "livros"
