@@ -1,8 +1,6 @@
 import pytest
-
 from product.factories import CategoryFactory
 from product.serializers import CategorySerializer
-
 
 @pytest.mark.django_db
 def test_category_serializer_accepts_valid_data():
@@ -11,11 +9,13 @@ def test_category_serializer_accepts_valid_data():
         "slug": "eletronicos",
         "description": "Produtos eletrônicos",
         "active": True,
+
     }
 
     serializer = CategorySerializer(data=data)
 
     assert serializer.is_valid(), serializer.errors
+
 
 
 @pytest.mark.django_db
@@ -45,13 +45,15 @@ def test_category_serializer_requires_title():
 
 
 @pytest.mark.django_db
-def test_category_serializer_accepts_without_slug():
+def test_category_serializer_requires_slug():
     data = {
         "title": "Eletrônicos",
         "description": "Produtos eletrônicos",
         "active": True,
+
     }
 
     serializer = CategorySerializer(data=data)
 
-    assert serializer.is_valid(), serializer.errors
+    assert not serializer.is_valid()
+    assert "slug" in serializer.errors

@@ -1,9 +1,8 @@
 import pytest
 
-from order.factories import OrderFactory, UserFactory
+from order.factories import OrderFactory
 from order.serializers import OrderSerializer
 from product.factories import ProductFactory
-
 
 @pytest.mark.django_db
 def test_order_serializer_returns_total():
@@ -14,8 +13,7 @@ def test_order_serializer_returns_total():
 
     serializer = OrderSerializer(order)
 
-    assert serializer.data["total"] == 150
-
+    assert serializer.data['total'] == 150
 
 @pytest.mark.django_db
 def test_order_serializer_returns_products():
@@ -26,16 +24,27 @@ def test_order_serializer_returns_products():
 
     serializer = OrderSerializer(order)
 
-    assert len(serializer.data["product"]) == 2
-
+    assert len(serializer.data['product']) == 2
 
 @pytest.mark.django_db
 def test_order_serializer_accepts_valid_data():
-    product = ProductFactory()
-    user = UserFactory()
     data = {
-        "products_id": [product.id],
-        "user": user.id,
+        "product": [
+            {
+                "title": "Teclado",
+                "description": "Teclado mecânico",
+                "price": 150,
+                "active": True,
+                "category": [
+                    {
+                        "title": "Eletrônicos",
+                        "slug": "eletronicos",
+                        "description": "Produtos eletrônicos",
+                        "active": True,
+                    }
+                ],
+            }
+        ]
     }
 
     serializer = OrderSerializer(data=data)
