@@ -3,7 +3,7 @@ name = "bookstore"
 version = "0.1.0"
 description = "BookStore API"
 authors = [
-    {name = "desireedias",email = "desireerdias@gmail.com"}
+    {name = "nicolasndias", email = "nicolas.nd@hotmail.com"}
 ]
 requires-python = ">=3.13"
 dependencies = [
@@ -11,6 +11,7 @@ dependencies = [
     "factory-boy (>=3.3.3,<4.0.0)",
     "django (>=6.0.7,<7.0.0)",
     "django-rest-framework (>=0.1.0,<0.2.0)",
+    "djangorestframework (>=3.17.1,<4.0.0)",
     "faker (>=40.31.0,<41.0.0)"
 ]
 
