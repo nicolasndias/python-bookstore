@@ -3,7 +3,7 @@ name = "bookstore"
 version = "0.1.0"
 description = "BookStore API"
 authors = [
-    {name = "nicolasdias",email = "nicolas.nd@hotmail.com"}
+    {name = "nicolasndias", email = "nicolas.nd@hotmail.com"}
 ]
 requires-python = ">=3.13"
 dependencies = [
